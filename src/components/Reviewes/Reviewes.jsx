@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const Reviewes = () => {
-  return <div>Reviewes</div>;
+export const Reviews = () => {
+  return <div>Reviews</div>;
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { requestTrendingMovies } from '../servises/api';
+import { Link } from 'react-router-dom';
+import { requestTrendingMovies } from 'servises/api';
 import { STATUSES } from 'utils/constants';
 import { Loader } from 'components/Loader/Loader';
 
@@ -40,7 +41,11 @@ const HomePage = () => {
       {status === STATUSES.success && (
         <ul>
           {trendingMovies.map(movie => (
-            <li key={movie.id}>{movie.title || movie.name}</li>
+            <li key={movie.id}>
+              <Link to={`/movies/${movie.id}`}>
+                {movie.title || movie.name}
+              </Link>
+            </li>
           ))}
         </ul>
       )}

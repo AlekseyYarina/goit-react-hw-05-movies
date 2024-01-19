@@ -1,5 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const ButtonToBack = () => {
-  return <button type="button">To Back</button>;
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  return (
+    <button type="button" onClick={goBack}>
+      To Back
+    </button>
+  );
 };
