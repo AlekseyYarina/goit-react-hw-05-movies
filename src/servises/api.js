@@ -49,3 +49,15 @@ export const requestMovieReviews = async id => {
     throw error;
   }
 };
+
+export const requestSearchMovies = async searchTerm => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/search/movie?query=${searchTerm}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

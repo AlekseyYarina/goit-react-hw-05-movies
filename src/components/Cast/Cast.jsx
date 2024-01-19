@@ -10,7 +10,6 @@ export const Cast = () => {
     const fetchMovieCast = async () => {
       try {
         const castData = await requestMovieCast(id);
-        console.log('Данные актеров фильма:', castData);
         setCast(castData.cast);
       } catch (error) {
         console.error('Error fetching movie cast:', error);
