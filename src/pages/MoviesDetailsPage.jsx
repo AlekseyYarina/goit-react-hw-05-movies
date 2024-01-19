@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ButtonToBack } from 'components/ButtonToBack/ButtonToBack';
-import { Cast } from 'components/Cast/Cast';
+import { Cast } from '../components/Cast/Cast';
 import { Reviews } from 'components/Reviewes/Reviewes';
 import { requestMovieById } from 'servises/api';
 import { STATUSES } from 'utils/constants';
@@ -12,6 +12,8 @@ const MoviesDetailsPage = () => {
   const [status, setStatus] = useState(STATUSES.idle);
   const [error, setError] = useState(null);
   const [movieDetails, setMovieDetails] = useState(null);
+  const [showCast, setShowCast] = useState(false);
+  const [showReviews, setShowReviews] = useState(false);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -30,7 +32,17 @@ const MoviesDetailsPage = () => {
     fetchMovieDetails();
   }, [id]);
 
-  console.log(movieDetails);
+  const handleCastClick = event => {
+    event.preventDefault();
+    setShowCast(true);
+    setShowReviews(false);
+  };
+
+  const handleReviewsClick = event => {
+    event.preventDefault();
+    setShowReviews(true);
+    setShowCast(false);
+  };
 
   return (
     <div>
@@ -41,7 +53,9 @@ const MoviesDetailsPage = () => {
         <div>
           <img
             alt={movieDetails.title || movieDetails.name}
-            src={`https://media.themoviedb.org/t/p/w440_and_h660_face/${movieDetails.backdrop_path}`}
+            src={`https://media.themoviedb.org/t/p/w440_and_h660_face/${
+              movieDetails.backdrop_path || '/no_image_available.jpg'
+            }`}
             width="200"
             height="300"
           />
@@ -55,9 +69,25 @@ const MoviesDetailsPage = () => {
       )}
 
       {status === STATUSES.error && <p>Error: {error}</p>}
+      <p>Additional information</p>
+      <button
+        type="button"
+        onClick={handleCastClick}
+        style={{ cursor: 'pointer' }}
+      >
+        Cast
+      </button>
 
-      <Cast />
-      <Reviews />
+      <button
+        type="button"
+        onClick={handleReviewsClick}
+        style={{ cursor: 'pointer' }}
+      >
+        Reviews
+      </button>
+
+      {showCast && <Cast />}
+      {showReviews && <Reviews />}
     </div>
   );
 };
