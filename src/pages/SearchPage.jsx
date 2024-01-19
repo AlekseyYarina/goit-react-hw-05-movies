@@ -37,7 +37,7 @@ const SearchMovie = () => {
 
   return (
     <div>
-      <h3>Search Movies</h3>
+      <h2>Search Movies</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
