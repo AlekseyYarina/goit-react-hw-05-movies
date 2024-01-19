@@ -3,13 +3,14 @@ import { Cast } from 'components/Cast/Cast';
 import { Reviewes } from 'components/Reviewes/Reviewes';
 import React from 'react';
 
-export const MoviesDatails = () => {
+export const MoviesDetailsPage = () => {
   return (
     <div>
       <ButtonToBack />
-      MoviesDatails
+      <h3>MoviesDatails</h3>
       <Cast />
       <Reviewes />
     </div>
   );
 };
+export default MoviesDetailsPage;

@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const requestImgsByQuery = async (searchTerm, page) => {
+export const requestTrendingMovies = async () => {
   const { data } = await axios.get(
-    `https://pixabay.com/api/?q=${searchTerm}&page=${page}&key=12446809-e6b893a82bb8773aa8d1d047e&image_type=photo&orientation=horizontal&per_page=6`
+    `https://api.themoviedb.org/3/trending/all/day?api_key=e065dfec6f2e6d76c57b93ce16d955ed&language=en-US`
   );
-  return data;
+  return data.results;
 };
