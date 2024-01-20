@@ -1,0 +1,7 @@
+.linkMovie {
+  display: flex;
+  padding: 2px 0;
+  /* text-decoration: none; */
+  cursor: pointer;
+  color: #333;
+}

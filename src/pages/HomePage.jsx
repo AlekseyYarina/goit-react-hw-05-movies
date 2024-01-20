@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { requestTrendingMovies } from 'servises/api';
 import { STATUSES } from 'utils/constants';
 import { Loader } from 'components/Loader/Loader';
+import css from './HomePage.module.css';
 
 const HomePage = () => {
   const [status, setStatus] = useState(STATUSES.idle);
   const [error, setError] = useState(null);
   const [trendingMovies, setTrendingMovies] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchTrendingMovies = async () => {
@@ -41,8 +43,12 @@ const HomePage = () => {
       {status === STATUSES.success && (
         <ul>
           {trendingMovies.map(movie => (
-            <li key={movie.id}>
-              <Link to={`/movies/${movie.id}`}>
+            <li className={css.linkMovie} key={movie.id}>
+              <Link
+                className={css.linkMovie}
+                state={{ from: location }}
+                to={`/movies/${movie.id}`}
+              >
                 {movie.title || movie.name}
               </Link>
             </li>

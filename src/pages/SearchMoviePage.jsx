@@ -2,27 +2,27 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { requestSearchMovies } from '../servises/api';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
-const SearchMovie = () => {
+const SearchMoviePage = () => {
   const [searchResults, setSearchResults] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
 
   const query = searchParams.get('sQuery');
-  const [searchTerm, setSearchTerm] = useState(query ?? '');
+  const [searchValue, setSearchValue] = useState(query ?? '');
 
   const handleSearch = useCallback(async () => {
     try {
-      const searchResultData = await requestSearchMovies(searchTerm);
+      const searchResultData = await requestSearchMovies(searchValue);
       setSearchResults(searchResultData);
     } catch (error) {
       console.error('Error fetching search results:', error);
     }
 
     setSearchParams({
-      sQuery: searchTerm,
+      sQuery: searchValue,
     });
-  }, [searchTerm, setSearchParams]);
+  }, [searchValue, setSearchParams]);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -42,7 +42,7 @@ const SearchMovie = () => {
         <input
           type="text"
           defaultValue={query}
-          onChange={e => setSearchTerm(e.target.value)}
+          onChange={e => setSearchValue(e.target.value)}
           required
         />
         <button type="submit" onClick={handleSearch}>
@@ -67,4 +67,4 @@ const SearchMovie = () => {
   );
 };
 
-export default SearchMovie;
+export default SearchMoviePage;

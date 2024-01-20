@@ -1,0 +1,25 @@
+.navlink {
+  display: inline-flex;
+  padding: 10px 0;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 60px;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: normal;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.2s;
+}
+
+.active {
+  color: #d81b60;
+}
+
+.linkGoBack {
+  display: flex;
+  padding: 10px 0;
+  /* text-decoration: none; */
+  cursor: pointer;
+  color: #333;
+}

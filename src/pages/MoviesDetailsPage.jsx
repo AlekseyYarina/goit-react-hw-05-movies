@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { ButtonToBack } from 'components/ButtonToBack/ButtonToBack';
+import React, { useEffect, useState, useRef } from 'react';
+import {
+  Link,
+  NavLink,
+  Route,
+  Routes,
+  useParams,
+  useLocation,
+} from 'react-router-dom';
 import { Cast } from '../components/Cast/Cast';
 import { Reviews } from 'components/Reviewes/Reviewes';
 import { requestMovieById } from 'servises/api';
 import { STATUSES } from 'utils/constants';
 import { Loader } from 'components/Loader/Loader';
+import css from './MoviesDetailsPage.module.css';
 
 const MoviesDetailsPage = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const backLinkRef = useRef(location.state?.from ?? '//movies');
   const [status, setStatus] = useState(STATUSES.idle);
   const [error, setError] = useState(null);
   const [movieDetails, setMovieDetails] = useState(null);
-  const [showCast, setShowCast] = useState(false);
-  const [showReviews, setShowReviews] = useState(false);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -32,25 +39,14 @@ const MoviesDetailsPage = () => {
     fetchMovieDetails();
   }, [id]);
 
-  const handleCastClick = event => {
-    event.preventDefault();
-    setShowCast(true);
-    setShowReviews(false);
-  };
-
-  const handleReviewsClick = event => {
-    event.preventDefault();
-    setShowReviews(true);
-    setShowCast(false);
-  };
-
   return (
     <div>
-      <ButtonToBack />
-
       {status === STATUSES.pending && <Loader />}
       {status === STATUSES.success && (
         <div>
+          <Link className={css.linkGoBack} to={backLinkRef.current}>
+            Go back
+          </Link>
           <img
             alt={movieDetails.title || movieDetails.name}
             src={`https://media.themoviedb.org/t/p/w440_and_h660_face/${
@@ -69,25 +65,31 @@ const MoviesDetailsPage = () => {
       )}
 
       {status === STATUSES.error && <p>Error: {error}</p>}
-      <p>Additional information</p>
-      <button
-        type="button"
-        onClick={handleCastClick}
-        style={{ cursor: 'pointer' }}
+      <h3>Additional information</h3>
+
+      <NavLink
+        className={({ isActive }) =>
+          `${css.navlink} ${isActive ? css.active : ''}`
+        }
+        to="cast"
       >
         Cast
-      </button>
+      </NavLink>
 
-      <button
-        type="button"
-        onClick={handleReviewsClick}
-        style={{ cursor: 'pointer' }}
+      <NavLink
+        className={({ isActive }) =>
+          `${css.navlink} ${isActive ? css.active : ''}`
+        }
+        to="reviews"
       >
         Reviews
-      </button>
-
-      {showCast && <Cast />}
-      {showReviews && <Reviews />}
+      </NavLink>
+      <div>
+        <Routes>
+          <Route path="cast" element={<Cast />} />
+          <Route path="reviews" element={<Reviews />} />
+        </Routes>
+      </div>
     </div>
   );
 };
