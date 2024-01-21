@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import {
   Link,
   NavLink,
@@ -7,17 +7,19 @@ import {
   useParams,
   useLocation,
 } from 'react-router-dom';
-import { Cast } from '../components/Cast/Cast';
-import { Reviews } from 'components/Reviewes/Reviewes';
+
 import { requestMovieById } from 'servises/api';
 import { STATUSES } from 'utils/constants';
 import { Loader } from 'components/Loader/Loader';
 import css from './MoviesDetailsPage.module.css';
 
+const Cast = lazy(() => import('../components/Cast/Cast'));
+const Reviews = lazy(() => import('../components/Reviewes/Reviewes'));
+
 const MoviesDetailsPage = () => {
   const { id } = useParams();
   const location = useLocation();
-  const backLinkRef = useRef(location.state?.from ?? '//movies');
+  const backLinkRef = useRef(location.state?.from ?? '/movies');
   const [status, setStatus] = useState(STATUSES.idle);
   const [error, setError] = useState(null);
   const [movieDetails, setMovieDetails] = useState(null);
@@ -85,10 +87,12 @@ const MoviesDetailsPage = () => {
         Reviews
       </NavLink>
       <div>
-        <Routes>
-          <Route path="cast" element={<Cast />} />
-          <Route path="reviews" element={<Reviews />} />
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="cast" element={<Cast />} />
+            <Route path="reviews" element={<Reviews />} />
+          </Routes>
+        </Suspense>
       </div>
     </div>
   );
