@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/524.f869dbf1.chunk.css","mappings":"AAAA,kCAKE,UAAW,CADX,cAAe,CAHf,YAAa,CACb,aAIF","sources":["pages/SearchMoviePage/SearchMoviePage.module.css"],"sourcesContent":[".linkMovie {\n  display: flex;\n  padding: 2px 0;\n  /* text-decoration: none; */\n  cursor: pointer;\n  color: #333;\n}\n"],"names":[],"sourceRoot":""}
