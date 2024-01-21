@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProfileImg, requestMovieCast } from 'servises/api';
+import css from './Cast.module.css';
 
 const Cast = () => {
   const [cast, setCast] = useState([]);
@@ -25,11 +26,15 @@ const Cast = () => {
     return <div>No cast information available</div>;
   }
 
+  if (cast.length === 0) {
+    return <div>No cast information available</div>;
+  }
+
   return (
     <div>
-      <ul>
+      <ul className={css.list}>
         {cast.map(member => (
-          <li key={member.id}>
+          <li className={css.castStyle} key={member.id}>
             <img
               src={getProfileImg(member.profile_path)}
               alt={member.name}

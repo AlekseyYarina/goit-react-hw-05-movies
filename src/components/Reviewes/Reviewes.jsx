@@ -10,7 +10,12 @@ const Reviews = () => {
     const fetchMovieReviews = async () => {
       try {
         const response = await requestMovieReviews(id);
-        setReviews(response.results);
+
+        if (response.results.length === 0) {
+          setReviews([]);
+        } else {
+          setReviews(response.results);
+        }
       } catch (error) {
         console.error('Error fetching movie reviews:', error);
       }
@@ -21,7 +26,7 @@ const Reviews = () => {
     }
   }, [id]);
 
-  if (!id) {
+  if (!id || reviews.length === 0) {
     return <div>No reviews available</div>;
   }
 

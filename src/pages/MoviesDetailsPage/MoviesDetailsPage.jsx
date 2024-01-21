@@ -61,6 +61,7 @@ const MoviesDetailsPage = () => {
           <p>{movieDetails.overview}</p>
           <h4>Genres</h4>
           <p>{movieDetails.genres.map(genre => genre.name).join(', ')}</p>
+          <div className={css.line}></div>
         </div>
       )}
 
@@ -85,6 +86,7 @@ const MoviesDetailsPage = () => {
         Reviews
       </NavLink>
       <div>
+        <div className={css.line}></div>
         <Suspense fallback={<Loader />}>
           <Routes>
             <Route path="cast" element={<Cast />} />

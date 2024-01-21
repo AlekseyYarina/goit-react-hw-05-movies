@@ -1,0 +1,16 @@
+.list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.castStyle {
+  list-style: none;
+}
+
+p {
+  margin: 0;
+  padding: 5px 0;
+}

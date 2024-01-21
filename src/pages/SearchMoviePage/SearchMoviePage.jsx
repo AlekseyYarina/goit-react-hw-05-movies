@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { requestSearchMovies } from '../../servises/api';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import css from './SearchMoviePage.module.css';
 
 const SearchMoviePage = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -44,18 +45,25 @@ const SearchMoviePage = () => {
         </button>
       </form>
 
-      {searchResults && searchResults.results ? (
+      {query &&
+      searchResults &&
+      searchResults.results &&
+      searchResults.results.length > 0 ? (
         <ul>
           {searchResults.results.map(movie => (
-            <li key={movie.id}>
-              <Link state={{ from: location }} to={`/movies/${movie.id}`}>
+            <li className={css.linkMovie} key={movie.id}>
+              <Link
+                className={css.linkMovie}
+                state={{ from: location }}
+                to={`/movies/${movie.id}`}
+              >
                 {movie.title}
               </Link>
             </li>
           ))}
         </ul>
       ) : (
-        <p>No search results</p>
+        query && <p>Sorry, no search results, please change your request.</p>
       )}
     </div>
   );
