@@ -61,3 +61,13 @@ export const requestSearchMovies = async searchTerm => {
     throw error;
   }
 };
+
+export const getPoster = url =>
+  url
+    ? `https://media.themoviedb.org/t/p/w440_and_h660_face/${url}`
+    : 'https://fakeimg.pl/400x600?text=No+image&font=bebas';
+
+export const getProfileImg = url =>
+  url
+    ? `https://image.tmdb.org/t/p/w200${url}`
+    : 'https://fakeimg.pl/400x600?text=No+image&font=bebas';

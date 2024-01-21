@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { requestMovieCast } from 'servises/api';
+import { getProfileImg, requestMovieCast } from 'servises/api';
 
 const Cast = () => {
   const [cast, setCast] = useState([]);
@@ -31,10 +31,9 @@ const Cast = () => {
         {cast.map(member => (
           <li key={member.id}>
             <img
-              src={`https://image.tmdb.org/t/p/w200${
-                member.profile_path || '/no_image_available.jpg'
-              }`}
+              src={getProfileImg(member.profile_path)}
               alt={member.name}
+              width={150}
             />
             <p>{member.name}</p>
             <p>Character: {member.character}</p>

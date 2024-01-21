@@ -8,13 +8,13 @@ import {
   useLocation,
 } from 'react-router-dom';
 
-import { requestMovieById } from 'servises/api';
+import { getPoster, requestMovieById } from 'servises/api';
 import { STATUSES } from 'utils/constants';
 import { Loader } from 'components/Loader/Loader';
 import css from './MoviesDetailsPage.module.css';
 
-const Cast = lazy(() => import('../components/Cast/Cast'));
-const Reviews = lazy(() => import('../components/Reviewes/Reviewes'));
+const Cast = lazy(() => import('../../components/Cast/Cast'));
+const Reviews = lazy(() => import('../../components/Reviewes/Reviewes'));
 
 const MoviesDetailsPage = () => {
   const { id } = useParams();
@@ -51,9 +51,7 @@ const MoviesDetailsPage = () => {
           </Link>
           <img
             alt={movieDetails.title || movieDetails.name}
-            src={`https://media.themoviedb.org/t/p/w440_and_h660_face/${
-              movieDetails.backdrop_path || '/no_image_available.jpg'
-            }`}
+            src={getPoster(movieDetails.poster_path)}
             width="200"
             height="300"
           />

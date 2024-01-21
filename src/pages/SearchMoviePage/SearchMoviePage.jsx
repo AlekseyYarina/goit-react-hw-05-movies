@@ -1,32 +1,31 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { requestSearchMovies } from '../servises/api';
+import { requestSearchMovies } from '../../servises/api';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 const SearchMoviePage = () => {
-  const [searchResults, setSearchResults] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
 
   const query = searchParams.get('sQuery');
-  const [searchValue, setSearchValue] = useState(query ?? '');
 
   const handleSearch = useCallback(async () => {
     try {
-      const searchResultData = await requestSearchMovies(searchValue);
+      const searchResultData = await requestSearchMovies(query);
       setSearchResults(searchResultData);
     } catch (error) {
       console.error('Error fetching search results:', error);
     }
-
-    setSearchParams({
-      sQuery: searchValue,
-    });
-  }, [searchValue, setSearchParams]);
+  }, [query]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    handleSearch();
+    const query = e.target.query.value.toLowerCase().trim();
+    if (!query) return;
+    setSearchParams({
+      sQuery: query,
+    });
   };
 
   useEffect(() => {
@@ -39,18 +38,13 @@ const SearchMoviePage = () => {
     <div>
       <h2>Search Movies</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          defaultValue={query}
-          onChange={e => setSearchValue(e.target.value)}
-          required
-        />
+        <input type="text" name="query" defaultValue={query} required />
         <button type="submit" onClick={handleSearch}>
           Search
         </button>
       </form>
 
-      {searchResults ? (
+      {searchResults && searchResults.results ? (
         <ul>
           {searchResults.results.map(movie => (
             <li key={movie.id}>
