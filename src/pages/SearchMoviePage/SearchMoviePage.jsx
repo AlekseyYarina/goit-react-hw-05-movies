@@ -40,9 +40,7 @@ const SearchMoviePage = () => {
       <h2>Search Movies</h2>
       <form onSubmit={handleSubmit}>
         <input type="text" name="query" defaultValue={query} required />
-        <button type="submit" onClick={handleSearch}>
-          Search
-        </button>
+        <button type="submit">Search</button>
       </form>
 
       {query &&
